@@ -8,7 +8,7 @@
                 "Service": "cloudtrail.amazonaws.com"
             },
             "Action": "s3:GetBucketAcl",
-            "Resource": "arn:aws:s3:::org-cloudtrail-logs-098819594569-20250718"
+            "Resource": "arn:aws:s3:::org-cloudtrail-logs-<管理アカウントのID>-20250718"
         },
         {
             "Sid": "AllowCloudTrailWrite",
@@ -17,13 +17,13 @@
                 "Service": "cloudtrail.amazonaws.com"
             },
             "Action": "s3:PutObject",
-            "Resource": "arn:aws:s3:::org-cloudtrail-logs-098819594569-20250718/AWSLogs/557690608573/*",
+            "Resource": "arn:aws:s3:::org-cloudtrail-logs-<管理アカウントのID>-20250718/AWSLogs/<開発アカウントのID>/*",
             "Condition": {
                 "StringEquals": {
-                    "aws:SourceAccount": "557690608573"
+                    "aws:SourceAccount": "<開発アカウントのID>"
                 },
                 "ArnLike": {
-                    "aws:SourceArn": "arn:aws:cloudtrail:*:557690608573:trail/*"
+                    "aws:SourceArn": "arn:aws:cloudtrail:*:<開発アカウントのID>:trail/*"
                 }
             }
         },
@@ -31,13 +31,13 @@
             "Sid": "AllowDevAccountToWriteLogs",
             "Effect": "Allow",
             "Principal": {
-                "AWS": "arn:aws:iam::557690608573:root"
+                "AWS": "arn:aws:iam::<開発アカウントのID>:root"
             },
             "Action": "s3:PutObject",
-            "Resource": "arn:aws:s3:::org-cloudtrail-logs-098819594569-20250718/AWSLogs/557690608573/*",
+            "Resource": "arn:aws:s3:::org-cloudtrail-logs-<管理アカウントのID>-20250718/AWSLogs/<開発アカウントのID>/*",
             "Condition": {
                 "StringEquals": {
-                    "aws:SourceAccount": "557690608573"
+                    "aws:SourceAccount": "<開発アカウントのID>"
                 }
             }
         }
